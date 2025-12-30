@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdminLayout from './admin/layouts/AdminLayout';
 // import Dashboard from './admin/pages/Dashboard';
 // Placeholder pages (we'll build them soon)
-// import ProductList from './admin/pages/Productlist';
-// import OrderList from './admin/pages/Orderlist';
-// import CategoryList from './admin/pages/Categorylist';
+import ProductsPage from './admin/pages/products/Productlist';
+// import CategoryList from './admin/pages/category/CategoryList';
+// import OrderList from './admin/pages/orders/OrderList';
+
 
 function App() {
   return (
@@ -14,9 +15,9 @@ function App() {
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminLayout />}>
           {/* <Route index element={<Dashboard />} /> */}
-          {/* <Route path="products" element={<ProductList />} />
-          <Route path="orders" element={<OrderList />} />
-          <Route path="categories" element={<CategoryList />} /> */}
+          <Route path="products" element={<ProductsPage />} />
+          {/* <Route path="categories" element={<CategoryList />} />
+          <Route path="orders" element={<OrderList />} /> */}
         </Route>
 
         {/* Home/Welcome Route */}
