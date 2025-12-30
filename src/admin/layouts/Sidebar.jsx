@@ -1,4 +1,3 @@
-// src/admin/layouts/sidebar.jsx
 import { Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
