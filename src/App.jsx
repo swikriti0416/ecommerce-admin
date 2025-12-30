@@ -1,7 +1,7 @@
 // src/App.jsx
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdminLayout from './admin/layouts/AdminLayout';
-import Dashboard from './admin/pages/Dashboard';
+// import Dashboard from './admin/pages/Dashboard';
 // Placeholder pages (we'll build them soon)
 // import ProductList from './admin/pages/Productlist';
 // import OrderList from './admin/pages/Orderlist';
@@ -13,7 +13,7 @@ function App() {
       <Routes>
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
+          {/* <Route index element={<Dashboard />} /> */}
           {/* <Route path="products" element={<ProductList />} />
           <Route path="orders" element={<OrderList />} />
           <Route path="categories" element={<CategoryList />} /> */}
@@ -34,3 +34,5 @@ function App() {
 }
 
 export default App;
+
+
