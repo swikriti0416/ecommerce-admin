@@ -29,7 +29,7 @@ export default function Sidebar() {
         <h1 className="text-3xl font-bold text-indigo-600">
           ShopEasy Admin
         </h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <p className="text-xl text-gray-500 mt-1">
           E-commerce Backoffice
         </p>
       </div>

@@ -1,4 +1,3 @@
-// src/admin/layouts/AdminLayout.jsx
 import { Outlet } from 'react-router-dom';
 import Sidebar from './sidebar';
 
@@ -14,7 +13,7 @@ export default function AdminLayout() {
         {/* Header - Full width on top right */}
         <header className="bg-white shadow-sm border-b border-gray-200">
           <div className="px-8 py-5 flex items-center justify-between">
-            <h1 className="text-2xl font-semibold text-gray-800">
+            <h1 className="text-2xl font-semibold text-blue-800">
               {/* You can dynamically change this based on route later */}
               Dashboard
             </h1>
