@@ -6,6 +6,7 @@ import AdminLayout from './admin/layouts/AdminLayout';
 import ProductsPage from './admin/pages/products/Productlist';
 // import CategoryList from './admin/pages/category/CategoryList';
 // import OrderList from './admin/pages/orders/OrderList';
+// import ProductAdd from './admin/pages/products/productadd';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="products" element={<ProductsPage />} />
           {/* <Route path="categories" element={<CategoryList />} />
           <Route path="orders" element={<OrderList />} /> */}
+          {/* <Route path="products/add" element={<ProductAdd />} /> */}
         </Route>
 
         {/* Home/Welcome Route */}

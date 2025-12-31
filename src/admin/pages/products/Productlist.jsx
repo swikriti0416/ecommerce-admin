@@ -28,6 +28,7 @@ export default function ProductsPage() {
         </div>
         <Button className="bg-blue-600 hover:bg-blue-700 shadow-sm">
           <Plus className="mr-2 h-4 w-4" /> Add Product
+          
         </Button>
       </div>
 
