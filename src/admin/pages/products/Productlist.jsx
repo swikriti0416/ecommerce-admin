@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import { 
   Table, 
   TableBody, 
@@ -18,6 +19,7 @@ import {
 import { Plus, Search, MoreHorizontal, Package, Edit, Trash2 } from "lucide-react"
 import { toast } from "react-toastify";   
 
+
 const TEMP_DATA = [
   { id: "1", name: "Modern Headphones", category: "Electronics", price: 199.99, status: "Active" },
   { id: "2", name: "Cotton T-Shirt", category: "Apparel", price: 25.00, status: "Low Stock" },
@@ -25,6 +27,7 @@ const TEMP_DATA = [
 ]
 
 export default function ProductsPage() {
+  const navigate = useNavigate()
   const handleEdit = (id) => {
     alert(`Edit product ${id} — route to edit page later`)
     
@@ -45,7 +48,9 @@ export default function ProductsPage() {
           <h1 className="text-3xl font-bold tracking-tight text-slate-900">Products</h1>
           <p className="text-slate-500">View and manage your ShopEasy inventory.</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700 shadow-sm">
+        <Button  
+          onClick={() => navigate("/admin/products/add")}
+          className="bg-blue-600 hover:bg-blue-700 shadow-sm">
           <Plus className="mr-2 h-4 w-4" /> Add Product
         </Button>
       </div>

@@ -3,6 +3,14 @@ import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableHead, 
+  TableHeader, 
+  TableRow 
+} from "@/components/ui/table"
 
 export default function ProductAdd() {
   const navigate = useNavigate()
@@ -34,7 +42,7 @@ export default function ProductAdd() {
       <Button variant="ghost" onClick={() => navigate(-1)} className="mb-4">
         ← Back
       </Button>
-      <h1 className="text-3xl font-bold mb-6">Add Product</h1>
+      <h1 className="text-3xl text-blue-600 font-bold mb-6">Add Product</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
