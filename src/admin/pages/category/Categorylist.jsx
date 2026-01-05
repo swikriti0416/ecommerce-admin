@@ -50,11 +50,7 @@ export default function CategoryList() {
       const updated = categories.filter(c => c.id !== id)
       setCategories(updated)
       localStorage.setItem("categories", JSON.stringify(updated))
-      toast.success("Category deleted successfully!")
-      , {
-      position: "top-center",
-      autoClose: 3000,
-    }
+      toast.info("Category deleted successfully!")
     }
   }
 

@@ -139,7 +139,7 @@ export default function ProductAdd() {
         })
       }
     } else {
-      // ADD: Create new product
+      
       const maxId = products.length > 0 
         ? Math.max(...products.map(p => Number(p.id) || 0))
         : 0
@@ -187,7 +187,7 @@ export default function ProductAdd() {
         </button>
 
         {/* Form Card */}
-        <div className="h-full overflow-hidden min-h-0 bg-white rounded-2xl shadow-lg pg-12 p-8 border border-gray-200">
+        <div className="h-full overflow-hidden min-h-0 bg-white rounded-2xl shadow-lg pg-12 p-8 border border-gray-200 pb-1">
           <h1 className="text-3xl font-bold text-blue-600 mb-2">
             {isEditMode ? "Edit Product" : "Add New Product"}
           </h1>
@@ -198,7 +198,7 @@ export default function ProductAdd() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Title */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Product Name *</label>
+              <label className="block text-lg font-medium text-gray-700 mb-2">Product Name *</label>
               <input
                 type="text"
                 name="title"
@@ -215,7 +215,7 @@ export default function ProductAdd() {
             {/* Price & Stock */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Price ($) *</label>
+                <label className="block text-lg font-medium text-gray-700 mb-2">Price ($) *</label>
                 <input
                   type="number"
                   name="price"
@@ -231,7 +231,7 @@ export default function ProductAdd() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Stock Quantity *</label>
+                <label className="block text-lg font-medium text-gray-700 mb-2">Stock Quantity *</label>
                 <input
                   type="number"
                   name="stock"
@@ -248,7 +248,7 @@ export default function ProductAdd() {
 
             {/* Category Dropdown */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
+              <label className="block text-lg font-medium text-gray-700 mb-2">Category *</label>
               <select
                 name="category"
                 value={formData.category}
@@ -267,7 +267,7 @@ export default function ProductAdd() {
 
             {/* Image URL */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Image URL (optional)</label>
+              <label className="block text-lg font-medium text-gray-700 mb-2">Image URL (optional)</label>
               <input
                 type="url"
                 name="image"

@@ -57,7 +57,7 @@ export default function CategoryAdd() {
         {/* Main Card */}
         <div className="bg-white rounded-2xl shadow-xl p-10 border border-gray-200">
           <div className="mb-10">
-            <h1 className="text-4xl font-bold text-blue-600 mb-3">
+            <h1 className="text-2xl font-bold text-blue-600 mb-3">
               Add New Category
             </h1>
             <p className="text-lg text-gray-600">
