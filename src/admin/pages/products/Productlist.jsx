@@ -46,7 +46,7 @@ export default function ProductsPage() {
     }
   }, []);
 
- 
+  // Safe search: use title or name
   const filteredProducts = products.filter((product) => {
     const name = product.title || product.name || ""; // Fallback to empty string
     const category = product.category || "";
@@ -62,10 +62,10 @@ export default function ProductsPage() {
       const updated = products.filter((p) => p.id !== id);
       setProducts(updated);
       localStorage.setItem("products", JSON.stringify(updated));
-      toast.success(`Product #${id} deleted successfully!`, {
-        position: "top-center",
+      toast.info("Product deleted successfully!!", {
+        position: "top-right",
         autoClose: 3000,
-      }); 
+      });
     }
   };
 
@@ -79,7 +79,7 @@ export default function ProductsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-bold text-blue-700">
+          <h1 className="text-3xl font-bold tracking-tight text-bold text-blue-600">
             Products
           </h1>
           <p className="text-slate-500">
