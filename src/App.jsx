@@ -1,11 +1,9 @@
-// src/App.jsx
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdminLayout from './admin/layouts/AdminLayout';
 // import Dashboard from './admin/pages/Dashboard';
-// Placeholder pages (we'll build them soon)
 import ProductsPage from './admin/pages/products/Productlist';
 import CategoryList from './admin/pages/category/CategoryList';
-// import OrderList from './admin/pages/orders/OrderList';
+import OrderList from "./admin/pages/order/orderlist"
 import ProductAdd from './admin/pages/products/productadd';
 import CategoryAdd from './admin/pages/category/categoryadd';
 
@@ -19,7 +17,7 @@ function App() {
           {/* <Route index element={<Dashboard />} /> */}
           <Route path="products" element={<ProductsPage />} />
           <Route path="categories" element={<CategoryList />} />
-          {/* <Route path="orders" element={<OrderList />} /> */}
+          <Route path="orders" element={<OrderList />} />
           <Route path="products/add" element={<ProductAdd />} />
           <Route path="categories/add" element={<CategoryAdd />} />
         </Route>

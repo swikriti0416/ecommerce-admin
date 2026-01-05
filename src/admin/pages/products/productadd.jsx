@@ -82,9 +82,14 @@ export default function ProductAdd() {
       toast.error("Please fix all errors before submitting")
       return
     }
+    const existingProducts = JSON.parse(localStorage.getItem("products") || "[]")
+    const maxId = existingProducts.length > 0 
+      ? Math.max(...existingProducts.map(p => Number(p.id) || 0))
+      : 0
+    const newId = maxId + 1
 
     const newProduct = {
-      id: Date.now().toString(),
+      id: newId,
       name: formData.title.trim(),
       price: parseFloat(formData.price),
       category: formData.category,

@@ -53,7 +53,10 @@ export default function ProductsPage() {
       const updated = products.filter(p => p.id !== id)
       setProducts(updated)
       localStorage.setItem("products", JSON.stringify(updated))
-      toast.success("Product deleted successfully!")
+      toast.success(" `Product #${id}`  deleted successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        })
     }
   }
 
