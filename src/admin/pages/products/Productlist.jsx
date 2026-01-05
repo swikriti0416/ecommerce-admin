@@ -46,7 +46,7 @@ export default function ProductsPage() {
     }
   }, []);
 
-  
+ 
   const filteredProducts = products.filter((product) => {
     const name = product.title || product.name || ""; // Fallback to empty string
     const category = product.category || "";
@@ -63,9 +63,9 @@ export default function ProductsPage() {
       setProducts(updated);
       localStorage.setItem("products", JSON.stringify(updated));
       toast.success(`Product #${id} deleted successfully!`, {
-        position: "top-right",
+        position: "top-center",
         autoClose: 3000,
-      });
+      }); 
     }
   };
 

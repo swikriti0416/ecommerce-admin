@@ -106,19 +106,22 @@ export default function ProductAdd() {
     existing.push(newProduct)
     localStorage.setItem("products", JSON.stringify(existing))
 
-    toast.success("Product added successfully!")
+    toast.success(`${newProduct.name} added successfully!`, {
+      position: "top-center",
+      autoClose: 3000,
+    })
     navigate("/admin/products")
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="   flex items-center justify-center p-6 bg-gray-100">
       <div className="max-w-3xl mx-auto">
         {/* Back Button */}
         <button
           onClick={() => navigate("/admin/products")}
-          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-8 font-medium"
+          className="flex items-center gap-2 text-2xl text-blue-600 hover:underline mb-8 font-medium"
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={36} />
           Back to Products
         </button>
 
@@ -215,13 +218,13 @@ export default function ProductAdd() {
               <button
                 type="button"
                 onClick={() => navigate("/admin/products")}
-                className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-red-400 transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-md"
+                className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors shadow-md"
               >
                 Add Product
               </button>

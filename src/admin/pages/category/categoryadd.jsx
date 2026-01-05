@@ -1,4 +1,3 @@
-// src/admin/pages/category/CategoryAdd.jsx
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ArrowLeft } from "lucide-react"
@@ -33,7 +32,10 @@ export default function CategoryAdd() {
     existing.push(newCategory)
     localStorage.setItem("categories", JSON.stringify(existing))
 
-    toast.success("Category added successfully!")
+    toast.success("Category added successfully!", {
+      position: "top-center",
+      autoClose: 3000,
+    })
     navigate("/admin/categories")
   }
 
@@ -41,14 +43,14 @@ export default function CategoryAdd() {
     <div className="p-6 max-w-2xl">
       <button
         onClick={() => navigate("/admin/categories")}
-        className="mb-6 flex items-center gap-2 text-blue-600 hover:underline"
+        className="mb-6 flex items-center gap-2 text-2xl font-semibold text-blue-600 hover:underline"
       >
-        <ArrowLeft size={20} /> Back
+        <ArrowLeft size={36} /> Back
       </button>
 
       <h1 className="text-3xl font-bold mb-6">Add New Category</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-xl border">
+      <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-xl  border-gray-200 shadow-xl">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Category Name
@@ -67,13 +69,13 @@ export default function CategoryAdd() {
           <button
             type="button"
             onClick={() => navigate("/admin/categories")}
-            className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50"
+            className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-red-400"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 shadow-md"
+            className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 shadow-md"
           >
             Add Category
           </button>

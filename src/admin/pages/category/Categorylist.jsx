@@ -1,4 +1,3 @@
-// src/admin/pages/category/CategoryList.jsx
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { 
@@ -52,6 +51,10 @@ export default function CategoryList() {
       setCategories(updated)
       localStorage.setItem("categories", JSON.stringify(updated))
       toast.success("Category deleted successfully!")
+      , {
+      position: "top-center",
+      autoClose: 3000,
+    }
     }
   }
 
@@ -66,12 +69,12 @@ export default function CategoryList() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">Categories</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-bold text-blue-600">Categories</h1>
           <p className="text-slate-500">Manage your product categories.</p>
         </div>
         <Button 
           onClick={() => navigate("/admin/categories/add")}
-          className="bg-blue-600 hover:bg-blue-700 shadow-sm"
+          className="bg-blue-400 hover:bg-blue-700 shadow-sm"
         >
           <Plus className="mr-2 h-4 w-4" /> Add Category
         </Button>
