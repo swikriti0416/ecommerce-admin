@@ -1,12 +1,14 @@
-import { useState, useEffect, use } from "react"
-import { useNavigate } from "react-router-dom"
+// src/admin/pages/products/ProductAdd.jsx  (keep the same file name!)
+import { useState, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom" // ← Added useParams
 import { ArrowLeft } from "lucide-react"
 import { toast } from "react-toastify"
 
-
-
 export default function ProductAdd() {
+  const { id } = useParams() // Get ID from URL if present
   const navigate = useNavigate()
+  const isEditMode = !!id // True only when editing
+
   const [formData, setFormData] = useState({
     title: "",
     price: "",
@@ -23,7 +25,9 @@ export default function ProductAdd() {
   })
 
   const [categories, setCategories] = useState([])
+  const [loading, setLoading] = useState(isEditMode) // Show loading only in edit mode
 
+  // Load categories (always)
   useEffect(() => {
     const saved = localStorage.getItem("categories")
     if (saved) {
@@ -37,7 +41,32 @@ export default function ProductAdd() {
     }
   }, [])
 
-  // Real-time validation on every change
+  // If editing → load product data
+  useEffect(() => {
+    if (!isEditMode) {
+      setLoading(false)
+      return
+    }
+
+    const products = JSON.parse(localStorage.getItem("products") || "[]")
+    const product = products.find(p => p.id === Number(id))
+
+    if (product) {
+      setFormData({
+        title: product.name || "",
+        price: product.price?.toString() || "",
+        category: product.category || "",
+        stock: product.stock?.toString() || "",
+        image: product.image || "",
+      })
+      setLoading(false)
+    } else {
+      toast.error("Product not found!")
+      navigate("/admin/products")
+    }
+  }, [id, isEditMode, navigate])
+
+  // Real-time validation
   useEffect(() => {
     const newErrors = {}
 
@@ -66,7 +95,7 @@ export default function ProductAdd() {
     }
 
     setErrors(newErrors)
-  }, [formData])
+  }, [formData, categories])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -80,42 +109,74 @@ export default function ProductAdd() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    // Final validation before submit
+    // Final validation
     if (errors.title || errors.price || errors.category || errors.stock ||
         !formData.title || !formData.price || !formData.category || formData.stock === "") {
       toast.error("Please fix all errors before submitting")
       return
     }
-    const existingProducts = JSON.parse(localStorage.getItem("products") || "[]")
-    const maxId = existingProducts.length > 0 
-      ? Math.max(...existingProducts.map(p => Number(p.id) || 0))
-      : 0
-    const newId = maxId + 1
 
-    const newProduct = {
-      id: newId,
-      name: formData.title.trim(),
-      price: parseFloat(formData.price),
-      category: formData.category,
-      stock: parseInt(formData.stock),
-      image: formData.image.trim() || "https://via.placeholder.com/150",
-      status: parseInt(formData.stock) > 10 ? "Active" : parseInt(formData.stock) > 0 ? "Low Stock" : "Out of Stock",
+    let products = JSON.parse(localStorage.getItem("products") || "[]")
+
+    if (isEditMode) {
+      // EDIT: Update existing product
+      const index = products.findIndex(p => p.id === Number(id))
+      if (index !== -1) {
+        products[index] = {
+          ...products[index],
+          name: formData.title.trim(),
+          price: parseFloat(formData.price),
+          category: formData.category,
+          stock: parseInt(formData.stock),
+          image: formData.image.trim() || "https://via.placeholder.com/150",
+          status: parseInt(formData.stock) > 10 ? "Active" : parseInt(formData.stock) > 0 ? "Low Stock" : "Out of Stock",
+        }
+
+        localStorage.setItem("products", JSON.stringify(products))
+        toast.success("Product updated successfully!", {
+          position: "top-center",
+          autoClose: 3000,
+        })
+      }
+    } else {
+      // ADD: Create new product
+      const maxId = products.length > 0 
+        ? Math.max(...products.map(p => Number(p.id) || 0))
+        : 0
+      const newId = maxId + 1
+
+      const newProduct = {
+        id: newId,
+        name: formData.title.trim(),
+        price: parseFloat(formData.price),
+        category: formData.category,
+        stock: parseInt(formData.stock),
+        image: formData.image.trim() || "https://via.placeholder.com/150",
+        status: parseInt(formData.stock) > 10 ? "Active" : parseInt(formData.stock) > 0 ? "Low Stock" : "Out of Stock",
+      }
+
+      products.push(newProduct)
+      localStorage.setItem("products", JSON.stringify(products))
+      toast.success(`${newProduct.name} added successfully!`, {
+        position: "top-center",
+        autoClose: 3000,
+      })
     }
 
-    const existing = JSON.parse(localStorage.getItem("products") || "[]")
-    existing.push(newProduct)
-    localStorage.setItem("products", JSON.stringify(existing))
-
-    toast.success(`${newProduct.name} added successfully!`, {
-      position: "top-center",
-      autoClose: 3000,
-    })
     navigate("/admin/products")
   }
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <p className="text-2xl text-gray-700">Loading product...</p>
+      </div>
+    )
+  }
+
   return (
-    <div className="   flex items-center justify-center p-6 bg-gray-100">
-      <div className="max-w-3xl mx-auto">
+    <div className=" hh-screen overflow-hidden flex">
+      <div className="flex-1 overflow-hidden min-h-0 max-w-3xl mx-auto py-8">
         {/* Back Button */}
         <button
           onClick={() => navigate("/admin/products")}
@@ -126,9 +187,13 @@ export default function ProductAdd() {
         </button>
 
         {/* Form Card */}
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h1 className="text-3xl font-bold text-blue-600 mb-2">Add New Product</h1>
-          <p className="text-gray-600 mb-8">Fill in the details below</p>
+        <div className="h-full overflow-hidden min-h-0 bg-white rounded-2xl shadow-lg pg-12 p-8 border border-gray-200">
+          <h1 className="text-3xl font-bold text-blue-600 mb-2">
+            {isEditMode ? "Edit Product" : "Add New Product"}
+          </h1>
+          <p className="text-gray-600 mb-8">
+            {isEditMode ? "Update the product details below" : "Fill in the details below"}
+          </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Title */}
@@ -226,7 +291,7 @@ export default function ProductAdd() {
                 type="submit"
                 className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors shadow-md"
               >
-                Add Product
+                {isEditMode ? "Save Changes" : "Add Product"}
               </button>
             </div>
           </form>
