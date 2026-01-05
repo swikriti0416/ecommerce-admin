@@ -58,10 +58,10 @@ export default function CategoryList() {
     }
   }
 
-  // Edit category (you can create a separate edit page later)
+  // Edit category comming soon
   const handleEdit = (id) => {
     toast.info(`Edit category ${id} — coming soon!`)
-    // Later: navigate(`/admin/categories/edit/${id}`)
+    // ramailo ko lagi rakheko hai
   }
 
   return (
