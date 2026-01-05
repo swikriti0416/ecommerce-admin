@@ -141,10 +141,11 @@ export default function ProductAdd() {
     } else {
       
       const maxId = products.length > 0 
-        ? Math.max(...products.map(p => Number(p.id) || 0))
+        ? Math.max(...products.map(c=> Number(c.id) || 0))
         : 0
       const newId = maxId + 1
 
+      
       const newProduct = {
         id: newId,
         name: formData.title.trim(),
