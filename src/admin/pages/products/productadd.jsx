@@ -1,20 +1,10 @@
 // src/admin/pages/products/ProductAdd.jsx
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import { useNavigate } from "react-router-dom"
 import { ArrowLeft } from "lucide-react"
 import { toast } from "react-toastify"
 
-const categories = [
-  "Electronics",
-  "Apparel",
-  "Home & Garden",
-  "Beauty",
-  "Sports",
-  "Toys",
-  "Books",
-  "Food & Beverages",
-  "Other",
-]
+
 
 export default function ProductAdd() {
   const navigate = useNavigate()
@@ -32,6 +22,21 @@ export default function ProductAdd() {
     category: "",
     stock: "",
   })
+
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    const saved = localStorage.getItem("categories")
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        setCategories(Array.isArray(parsed) ? parsed.map(c => c.name) : [])
+      } catch (e) {
+        console.error("Failed to load categories", e)
+        setCategories([])
+      }
+    }
+  }, [])
 
   // Real-time validation on every change
   useEffect(() => {
