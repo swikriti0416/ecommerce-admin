@@ -114,7 +114,7 @@ export default function ProductAdd() {
         </button>
 
         {/* Form Card */}
-        <div className="bg-white rounded-4lxl shadow-2xl p-8">
+        <div className="bg-white rounded-2xl shadow-lg p-8">
           <h1 className="text-3xl font-bold text-blue-600 mb-2">Add New Product</h1>
           <p className="text-gray-600 mb-8">Fill in the details below</p>
 
