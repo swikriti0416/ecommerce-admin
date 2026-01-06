@@ -1,11 +1,11 @@
 import { AlertCircle, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export default function DeleteConfirmModal({ isOpen, itemName, onClose, onConfirm }) {
+export default function DeleteConfirmModal({ isOpen, itemName,itemType, onClose, onConfirm }) {
   if (!isOpen) return null;
 
   return (
-    <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-slate-200 animate-in fade-in zoom-in duration-200">
+    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-xl overflow-hidden border border-slate-200 animate-in fade-in zoom-in duration-200">
       <div className="p-6">
         <div className="flex items-start gap-4">
           {/* Red Warning Icon */}
@@ -14,10 +14,10 @@ export default function DeleteConfirmModal({ isOpen, itemName, onClose, onConfir
           </div>
           
           <div className="space-y-2">
-            <h3 className="text-xl font-semibold text-slate-900">Delete product</h3>
-            <p className="text-slate-500 text-sm leading-relaxed">
+            <h3 className="text-xl font-semibold text-slate-900">Delete {itemType}</h3>
+            <p className="text-black-500 text-sm leading-relaxed">
               Are you sure you want to delete <span className="font-bold text-slate-900">"{itemName}"</span>? 
-              This action cannot be undone and will permanently remove the product from our servers.
+              This action cannot be undone and will permanently remove this from our servers.
             </p>
           </div>
         </div>
