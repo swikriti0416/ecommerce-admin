@@ -41,7 +41,7 @@ export default function CategoryAdd({ onClose, onSuccess }) {
   }
 
   return (
-    <div className=" bg-gray-100 flex items-center justify-center p-6">
+    <div className="rounded-3xl bg-gray-100 flex items-center justify-center p-6">
       <div className="w-full max-w-3xl mx-auto">
         {/* Back Button */}
         <button
@@ -66,7 +66,7 @@ export default function CategoryAdd({ onClose, onSuccess }) {
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Category Name Field */}
             <div>
-              <label className="block text-lg font-medium text-gray-700 mb-3">
+              <label className="block text-lg font-medium text-gray-700 mb-3 border-onfocus-blue-500">
                 Category Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -74,7 +74,7 @@ export default function CategoryAdd({ onClose, onSuccess }) {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g., Electronics, Clothing, Books"
-                className="w-full px-6 py-4 text-lg border border-gray-300 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all outline-none shadow-sm hover:border-gray-400"
+                className="w-full px-6 py-4 text-lg border border-gray-300 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-800 transition-all outline-none shadow-sm hover:border-gray-400"
                 autoFocus
               />
               <p className="mt-3 text-sm text-gray-500">

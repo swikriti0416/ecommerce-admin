@@ -192,7 +192,7 @@ export default function ProductAdd() {
           <h1 className="text-3xl font-bold text-blue-600 mb-2">
             {isEditMode ? "Edit Product" : "Add New Product"}
           </h1>
-          <p className="text-gray-600 mb-8">
+          <p className="text-lg text-gray-600 font-medium mb-8">
             {isEditMode ? "Update the product details below" : "Fill in the details below"}
           </p>
 

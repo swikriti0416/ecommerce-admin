@@ -84,10 +84,10 @@ export default function ProductsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-bold tracking-tight text-bold text-blue-600">
+          <h1 className="text-4xl  font-bold tracking-tight text-bold text-blue-600 ">
             Products
           </h1>
-          <p className="text-slate-500">
+          <p className="text-md text-slate-500">
             View and manage your ShopEasy inventory.
           </p>
         </div>
@@ -100,7 +100,7 @@ export default function ProductsPage() {
       </div>
 
       {/* Search */}
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center justify-between gap-4 ">
         <div className="relative w-full max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <Input
