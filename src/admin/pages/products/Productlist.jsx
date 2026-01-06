@@ -17,6 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import DeleteConfirmModal from "@/components/DeleteConfirmModal";
 import {
   Plus,
   Search,
@@ -31,6 +32,7 @@ export default function ProductsPage() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]); // Start empty
   const [search, setSearch] = useState("");
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   // Load products from localStorage
   useEffect(() => {
@@ -46,7 +48,6 @@ export default function ProductsPage() {
     }
   }, []);
 
- 
   const filteredProducts = products.filter((product) => {
     const name = product.title || product.name || ""; // Fallback to empty string
     const category = product.category || "";
@@ -58,15 +59,19 @@ export default function ProductsPage() {
 
   // Delete product
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
-      const updated = products.filter((p) => p.id !== id);
-      setProducts(updated);
-      localStorage.setItem("products", JSON.stringify(updated));
-      toast.info("Product deleted successfully!!", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-    }
+    const product = products.find((p) => p.id === id);
+    setItemToDelete(product);
+  };
+
+  const handleFinalDelete = () => {
+    if (!itemToDelete) return;
+
+    const updated = products.filter((c) => c.id !== itemToDelete.id);
+    setProducts(updated);
+    localStorage.setItem("products", JSON.stringify(updated));
+
+    toast.error(`${itemToDelete.name} has been removed.`);
+    setItemToDelete(null);
   };
 
   // Edit product
@@ -214,6 +219,18 @@ export default function ProductsPage() {
           </TableBody>
         </Table>
       </div>
+      {itemToDelete && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="w-full max-w-md animate-in fade-in zoom-in duration-200">
+            <DeleteConfirmModal
+              isOpen={!!itemToDelete}
+              itemName={itemToDelete?.name}
+              onClose={() => setItemToDelete(null)}
+              onConfirm={handleFinalDelete}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
