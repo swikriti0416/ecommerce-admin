@@ -141,7 +141,7 @@ export default function ProductAdd() {
     } else {
       
       const maxId = products.length > 0 
-        ? Math.max(...products.map(c=> Number(c.id) || 0))
+        ? Math.max(...products.map(p=> Number(p?.id) || 0))
         : 0
       const newId = maxId + 1
 
@@ -159,7 +159,7 @@ export default function ProductAdd() {
       products.push(newProduct)
       localStorage.setItem("products", JSON.stringify(products))
       toast.success(`${newProduct.name} added successfully!`, {
-        position: "top-center",
+        position: "bottom-right",
         autoClose: 3000,
       })
     }

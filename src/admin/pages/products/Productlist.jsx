@@ -46,7 +46,7 @@ export default function ProductsPage() {
     }
   }, []);
 
-  // Safe search: use title or name
+ 
   const filteredProducts = products.filter((product) => {
     const name = product.title || product.name || ""; // Fallback to empty string
     const category = product.category || "";

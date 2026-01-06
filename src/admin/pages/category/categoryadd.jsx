@@ -1,11 +1,9 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { ArrowLeft } from "lucide-react"
 import { toast } from "react-toastify"
 
-export default function CategoryAdd() {
-  const navigate = useNavigate()
-  const [name, setName] = useState("")
+export default function CategoryAdd({ onClose, onSuccess }) {
+ const [name, setName] = useState("")
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -15,7 +13,7 @@ export default function CategoryAdd() {
       return
     }
 
-    // Check for duplicate category name
+    
     const existingCategories = JSON.parse(localStorage.getItem("categories") || "[]")
     if (existingCategories.some(cat => cat.name.toLowerCase() === name.trim().toLowerCase())) {
       toast.error("A category with this name already exists")
@@ -23,7 +21,7 @@ export default function CategoryAdd() {
     }
 
     const maxId = existingCategories.length > 0 
-      ? Math.max(...existingCategories.map(c => Number(c.id) || 0))
+      ? Math.max(...existingCategories.map(p => Number(p?.id) || 0))
       : 0
     const newId = maxId + 1
 
@@ -36,10 +34,10 @@ export default function CategoryAdd() {
     localStorage.setItem("categories", JSON.stringify(existingCategories))
 
     toast.success("Category added successfully!", {
-      position: "top-center",
+      position: "bottom-right",
       autoClose: 3000,
     })
-    navigate("/admin/categories")
+    onSuccess()
   }
 
   return (
@@ -47,7 +45,7 @@ export default function CategoryAdd() {
       <div className="w-full max-w-3xl mx-auto">
         {/* Back Button */}
         <button
-          onClick={() => navigate("/admin/categories")}
+          onClick={onClose}
           className="flex items-center gap-3 text-2xl text-blue-600 hover:underline font-medium mb-10 transition-colors"
         >
           <ArrowLeft size={36} />
@@ -55,8 +53,8 @@ export default function CategoryAdd() {
         </button>
 
         {/* Main Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-10 border border-gray-200">
-          <div className="mb-10">
+        <div className="p-8">
+          <div className="mb-6">
             <h1 className="text-2xl font-bold text-blue-600 mb-3">
               Add New Category
             </h1>
@@ -88,7 +86,7 @@ export default function CategoryAdd() {
             <div className="pt-8 border-t border-gray-200 flex justify-end gap-5">
               <button
                 type="button"
-                onClick={() => navigate("/admin/categories")}
+                onClick={onClose}
                 className="px-8 py-4 text-lg border border-gray-300 rounded-xl hover:bg-gray-50 hover:bg-red-400 transition-all font-medium"
               >
                 Cancel

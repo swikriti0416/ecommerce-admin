@@ -19,14 +19,15 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Plus, Search, MoreHorizontal, Tags, Edit, Trash2 } from "lucide-react"
 import { toast } from "react-toastify"
+import CategoryAdd from "./CategoryAdd"
 
 export default function CategoryList() {
-  const navigate = useNavigate()
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [categories, setCategories] = useState([])
   const [search, setSearch] = useState("")
 
   // Load categories from localStorage
-  useEffect(() => {
+  const loadData = () => {
     const saved = localStorage.getItem("categories")
     if (saved) {
       try {
@@ -37,14 +38,24 @@ export default function CategoryList() {
         setCategories([])
       }
     }
+  }
+
+  useEffect(() => {
+    loadData()
   }, [])
 
-  // Filter categories
+  
+  const refreshCategories = () => {
+    loadData()
+    setIsModalOpen(false) 
+    
+  }
+
+  // Filter categories based on search input
   const filteredCategories = categories.filter(cat =>
     cat.name.toLowerCase().includes(search.toLowerCase())
   )
 
-  // Delete category
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this category?")) {
       const updated = categories.filter(c => c.id !== id)
@@ -54,29 +65,27 @@ export default function CategoryList() {
     }
   }
 
-  // Edit category comming soon
   const handleEdit = (id) => {
     toast.info(`Edit category ${id} — coming soon!`)
-    // ramailo ko lagi rakheko hai
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <div className="space-y-6 p-6">
+      {/* 1. Header Section */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-bold text-blue-600">Categories</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-blue-600">Categories</h1>
           <p className="text-slate-500">Manage your product categories.</p>
         </div>
         <Button 
-          onClick={() => navigate("/admin/categories/add")}
-          className="bg-blue-400 hover:bg-blue-700 shadow-sm"
+          onClick={() => setIsModalOpen(true)}
+          className="bg-blue-600 hover:bg-blue-700 shadow-sm text-white"
         >
           <Plus className="mr-2 h-4 w-4" /> Add Category
         </Button>
       </div>
 
-      {/* Search */}
+      {/* 2. Search Section */}
       <div className="flex items-center justify-between gap-4">
         <div className="relative w-full max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -84,17 +93,17 @@ export default function CategoryList() {
             placeholder="Search categories..." 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 bg-white border-slate-200 focus-visible:ring-blue-500" 
+            className="pl-10 bg-white border-slate-200" 
           />
         </div>
       </div>
 
-      {/* Table */}
+      {/* 3. Table Section */}
       <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
         <Table>
           <TableHeader className="bg-slate-50">
             <TableRow>
-              <TableHead className="font-semibold text-slate-900">ID</TableHead>  
+              <TableHead className="font-semibold text-slate-900 w-[100px]">ID</TableHead>  
               <TableHead className="font-semibold text-slate-900">Category</TableHead>
               <TableHead className="font-semibold text-slate-900">Status</TableHead>
               <TableHead className="text-right font-semibold text-slate-900">Actions</TableHead>
@@ -114,10 +123,7 @@ export default function CategoryList() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge 
-                      variant="secondary"
-                      className="bg-emerald-50 text-emerald-700 border-emerald-200"
-                    >
+                    <Badge variant="secondary" className="bg-emerald-50 text-emerald-700 border-emerald-200">
                       Active
                     </Badge>
                   </TableCell>
@@ -129,19 +135,11 @@ export default function CategoryList() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem 
-                          onClick={() => handleEdit(category.id)} 
-                          className="cursor-pointer"
-                        >
-                          <Edit className="mr-2 h-4 w-4" />
-                          Edit
+                        <DropdownMenuItem onClick={() => handleEdit(category.id)} className="cursor-pointer">
+                          <Edit className="mr-2 h-4 w-4" /> Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem 
-                          onClick={() => handleDelete(category.id)} 
-                          className="cursor-pointer text-red-600 focus:text-red-600"
-                        >
-                          <Trash2 className="mr-2 h-4 w-4" />
-                          Delete
+                        <DropdownMenuItem onClick={() => handleDelete(category.id)} className="cursor-pointer text-red-600 focus:text-red-600">
+                          <Trash2 className="mr-2 h-4 w-4" /> Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -151,13 +149,25 @@ export default function CategoryList() {
             ) : (
               <TableRow>
                 <TableCell colSpan={4} className="h-24 text-center text-slate-500">
-                  No categories found. Add your first one!
+                  No categories found.
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </div>
+
+      {/* 4. MODAL OVERLAY - This stays outside the table but inside the main div */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl">
+             <CategoryAdd 
+               onClose={() => setIsModalOpen(false)} 
+               onSuccess={refreshCategories} 
+             />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
