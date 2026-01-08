@@ -111,6 +111,7 @@ export default function ProductsPage() {
           />
         </div>
       </div>
+      
 
       {/* Table */}
       <div className="rounded-xl border border-slate-200 bg-white shadow-xl overflow-hidden">

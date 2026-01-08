@@ -18,15 +18,68 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Search, MoreHorizontal, Package, Eye, Trash2 } from "lucide-react"
+import { Search, MoreHorizontal, Package, Eye, Trash2, ChevronsUpDown } from "lucide-react"
 import { toast } from "react-toastify"
+
+const mockOrders = [
+  {
+    id: 101,
+    customer: "Sarah Song",
+    date: "2025-12-28",
+    total: 129.99,
+    status: "Delivered"
+  },
+  {
+    id: 102,
+    customer: "shista Gupta",
+    date: "2026-01-02",
+    total: 89.50,
+    status: "Shipped"
+  },
+  {
+    id: 103,
+    customer: "ram magar",
+    date: "2026-01-04",
+    total: 245.00,
+    status: "Processing"
+  },
+  {
+    id: 104,
+    customer: "Sani KC",
+    date: "2025-12-20",
+    total: 59.99,
+    status: "Cancelled"
+  },
+  {
+    id: 105,
+    customer: "Ramba ",
+    date: "2026-01-05",
+    total: 179.95,
+    status: "Processing"
+  },
+  {
+    id: 106,
+    customer: "Sahil Thapa",
+    date: "2026-01-03",
+    total: 320.00,
+    status: "Shipped"
+  },
+  {
+    id: 107,
+    customer: "ranmash",
+    date: "2025-12-30",
+    total: 74.25,
+    status: "Delivered"
+  }
+]
 
 export default function OrderList() {
   const navigate = useNavigate()
   const [orders, setOrders] = useState([])
   const [search, setSearch] = useState("")
+  const [statusFilter, setStatusFilter] = useState("All")
 
-  // Load orders from localStorage
+  // Load orders from localStorage or seed with mock data
   useEffect(() => {
     const saved = localStorage.getItem("orders")
     if (saved) {
@@ -37,17 +90,25 @@ export default function OrderList() {
         console.error("Invalid orders data", e)
         setOrders([])
       }
+    } else {
+      localStorage.setItem("orders", JSON.stringify(mockOrders))
+      setOrders(mockOrders)
     }
   }, [])
 
-  // Filter orders
-  const filteredOrders = orders.filter(order =>
-    order.id.toString().includes(search) ||
-    order.customer.toLowerCase().includes(search.toLowerCase()) ||
-    order.status.toLowerCase().includes(search.toLowerCase())
-  )
+  // Filter orders by search AND status
+  const filteredOrders = orders.filter(order => {
+    const matchesSearch =
+      search === "" ||
+      order.id.toString().includes(search) ||
+      order.customer.toLowerCase().includes(search.toLowerCase())
 
-  // Delete order
+    const matchesStatus = statusFilter === "All" || order.status === statusFilter
+
+    return matchesSearch && matchesStatus
+  })
+
+  
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this order?")) {
       const updated = orders.filter(o => o.id !== id)
@@ -57,10 +118,10 @@ export default function OrderList() {
     }
   }
 
-  // View order details (you can create a details page later)
+  
   const handleView = (id) => {
     toast.info(`View order ${id} — coming soon!`)
-    // Later: navigate(`/admin/orders/${id}`)
+    
   }
 
   const getStatusBadge = (status) => {
@@ -86,25 +147,69 @@ export default function OrderList() {
           <h1 className="text-3xl font-bold tracking-tight text-slate-900">Orders</h1>
           <p className="text-slate-500">View and manage customer orders.</p>
         </div>
-        {/* You can add "New Order" button later if needed */}
       </div>
 
-      {/* Search */}
-      <div className="flex items-center justify-between gap-4">
-        <div className="relative w-full max-w-sm">
+      {/* Filters Bar: Search first (left), Status dropdown second (right) */}
+      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+        {/* Search Input - First on left */}
+        <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-          <Input 
-            placeholder="Search by order ID, customer..." 
+          <Input
+            placeholder="Search by ID or customer..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 bg-white border-slate-200 focus-visible:ring-blue-500" 
+            className="pl-10 bg-white border-slate-200 focus-visible:ring-blue-500"
           />
         </div>
+
+        {/* Record Status Dropdown - Second */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="w-[180px] justify-between">
+              {statusFilter === "All" ? "Record Status" : statusFilter}
+              <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent 
+            align="start" 
+            className="bg-white shadow-lg border border-slate-200 z-50" // Added bg-white + shadow + high z-index
+          >
+            <DropdownMenuItem onClick={() => setStatusFilter("All")}>
+              All Statuses
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setStatusFilter("Processing")}>
+              Processing
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setStatusFilter("Shipped")}>
+              Shipped
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setStatusFilter("Delivered")}>
+              Delivered
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setStatusFilter("Cancelled")}>
+              Cancelled
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* Clear All Filters Button */}
+        {(statusFilter !== "All" || search !== "") && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setStatusFilter("All")
+              setSearch("")
+            }}
+          >
+            Clear all
+          </Button>
+        )}
       </div>
 
-      {/* Table */}
-      <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-        <Table>
+      {/* Table - Added relative positioning and z-index to prevent overlap */}
+      <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden relative z-0">
+        <Table className="relative z-0">
           <TableHeader className="bg-slate-50">
             <TableRow>
               <TableHead className="font-semibold text-slate-900">Order ID</TableHead>
