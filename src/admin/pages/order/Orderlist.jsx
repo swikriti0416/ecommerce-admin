@@ -24,35 +24,35 @@ import { toast } from "react-toastify"
 const mockOrders = [
   {
     id: 101,
-    customer: "Sarah Song",
+    customer: "Aasha Shrestha",
     date: "2025-12-28",
     total: 129.99,
     status: "Delivered"
   },
   {
     id: 102,
-    customer: "shista Gupta",
+    customer: "Prativa Khadka",
     date: "2026-01-02",
     total: 89.50,
     status: "Shipped"
   },
   {
     id: 103,
-    customer: "ram magar",
+    customer: "Ram Bahadur Magar",
     date: "2026-01-04",
     total: 245.00,
     status: "Processing"
   },
   {
     id: 104,
-    customer: "Sani KC",
+    customer: "Sanjay KC",
     date: "2025-12-20",
     total: 59.99,
     status: "Cancelled"
   },
   {
     id: 105,
-    customer: "Ramba ",
+    customer: "Rambha Gurung",
     date: "2026-01-05",
     total: 179.95,
     status: "Processing"
@@ -66,7 +66,7 @@ const mockOrders = [
   },
   {
     id: 107,
-    customer: "ranmash",
+    customer: "Ranjan Sharma",
     date: "2025-12-30",
     total: 74.25,
     status: "Delivered"
@@ -172,7 +172,7 @@ export default function OrderList() {
           </DropdownMenuTrigger>
           <DropdownMenuContent 
             align="start" 
-            className="bg-white shadow-lg border border-slate-200 z-50" // Added bg-white + shadow + high z-index
+            className="bg-white shadow-lg border border-slate-200 z-50"
           >
             <DropdownMenuItem onClick={() => setStatusFilter("All")}>
               All Statuses
@@ -207,7 +207,7 @@ export default function OrderList() {
         )}
       </div>
 
-      {/* Table - Added relative positioning and z-index to prevent overlap */}
+      {/* Table */}
       <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden relative z-0">
         <Table className="relative z-0">
           <TableHeader className="bg-slate-50">
