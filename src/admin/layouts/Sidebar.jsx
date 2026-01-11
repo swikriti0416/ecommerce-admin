@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation ,useNavigate} from 'react-router-dom';
 import {
   LayoutDashboard,
   Package,
@@ -16,10 +16,16 @@ const menuItems = [
 
 export default function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (path) => {
     if (path === '/admin') return location.pathname === '/admin';
     return location.pathname.startsWith(path);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    navigate('/login', { replace: true });
   };
 
   return (
@@ -59,7 +65,9 @@ export default function Sidebar() {
 
       {/* Logout */}
       <div className="p-4 border-t border-gray-200">
-        <button className="flex items-center gap-4 w-full px-5 py-3.5 text-red-600 hover:bg-red-50 rounded-xl transition-all font-medium text-lg">
+        <button
+          onClick={handleLogout}
+         className="flex items-center gap-4 w-full px-5 py-3.5 text-red-600 hover:bg-red-50 rounded-xl transition-all font-medium text-lg">
           <LogOut size={24} />
           <span>Logout</span>
         </button>
