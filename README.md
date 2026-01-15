@@ -3,6 +3,9 @@
 A **simple and modern admin panel** for managing e-commerce data like orders and categories.  
 This project is built with **React**, **Vite**, **Tailwind CSS**, and **Shadcn/UI** components, and is designed as a **lightweight demo dashboard** using **localStorage** for persistence.
 
+
+
+
 ---
 
 ## 🚀 Features
